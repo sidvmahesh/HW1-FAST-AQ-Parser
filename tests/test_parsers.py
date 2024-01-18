@@ -33,7 +33,35 @@ def test_FastaParser():
     files that are blank or corrupted in some way. Two example Fasta files are
     provided in /tests/bad.fa and /tests/empty.fa
     """
-    pass
+    records = []
+    with open("data/test.fa", "r") as fasta_file:
+        fasta_parser = FastaParser("data/test.fa")
+        for record in fasta_parser._get_record(f_obj = fasta_file):
+            print(record)
+            records.append(record)
+    
+    num_lines = len(open("data/test.fa", "r").readlines())
+    
+    assert len(records) == num_lines / 2
+    print("NEW TEST")
+    records = []
+    with open("tests/bad.fa", "r") as fasta_file:
+        fasta_parser = FastaParser("tests/bad.fa")
+        for record in fasta_parser._get_record(f_obj = fasta_file):
+            print(record)
+            records.append(record)
+    
+    assert len(records) == 0
+    print("NEW TEST")
+    records = []
+    with open("tests/blank.fa", "r") as fasta_file:
+        fasta_parser = FastaParser("tests/blank.fa")
+        for record in fasta_parser._get_record(f_obj = fasta_file):
+            print(record)
+            records.append(record)
+    
+    assert len(records) == 0
+
 
 
 def test_FastaFormat():
@@ -41,7 +69,13 @@ def test_FastaFormat():
     Test to make sure that a fasta file is being read in if a fastq file is
     read, the first item is None
     """
-    pass
+    records = []
+    with open("data/test.fq", "r") as fasta_file:
+        fasta_parser = FastaParser("data/test.fq")
+        for record in fasta_parser._get_record(f_obj = fasta_file):
+            records.append(record)
+    
+    assert records[0][0] == None
 
 
 def test_FastqParser():
@@ -57,4 +91,10 @@ def test_FastqFormat():
     Test to make sure fastq file is being read in. If this is a fasta file, the
     first line is None
     """
-    pass
+    records = []
+    with open("data/test.fa", "r") as fasta_file:
+        fastq_parser = FastqParser("data/test.fa")
+        for record in fastq_parser._get_record(f_obj = fasta_file):
+            records.append(record)
+    
+    assert records[0][0] == None
