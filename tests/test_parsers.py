@@ -37,27 +37,27 @@ def test_FastaParser():
     with open("data/test.fa", "r") as fasta_file:
         fasta_parser = FastaParser("data/test.fa")
         for record in fasta_parser._get_record(f_obj = fasta_file):
-            print(record)
+            #print(record)
             records.append(record)
     
     num_lines = len(open("data/test.fa", "r").readlines())
     
     assert len(records) == num_lines / 2
-    print("NEW TEST")
+    # print("NEW TEST")
     records = []
     with open("tests/bad.fa", "r") as fasta_file:
         fasta_parser = FastaParser("tests/bad.fa")
         for record in fasta_parser._get_record(f_obj = fasta_file):
-            print(record)
+            #print(record)
             records.append(record)
     
     assert len(records) == 0
-    print("NEW TEST")
+    # print("NEW TEST")
     records = []
     with open("tests/blank.fa", "r") as fasta_file:
         fasta_parser = FastaParser("tests/blank.fa")
         for record in fasta_parser._get_record(f_obj = fasta_file):
-            print(record)
+            #print(record)
             records.append(record)
     
     assert len(records) == 0
@@ -84,7 +84,36 @@ def test_FastqParser():
     an instance of your FastqParser class and assert that it properly reads 
     in the example Fastq File.
     """
-    pass
+    records = []
+    with open("data/test.fq", "r") as fastq_file:
+        fastq_parser = FastqParser("data/test.fq")
+        for record in fastq_parser._get_record(f_obj = fastq_file):
+            #print(record)
+            records.append(record)
+    
+    num_lines = len(open("data/test.fq", "r").readlines())
+    
+    assert len(records) == num_lines / 4
+    # print("NEW TEST")
+    records = []
+    with open("tests/bad.fq", "r") as fastq_file:
+        fastq_parser = FastqParser("tests/bad.fq")
+        for record in fastq_parser._get_record(f_obj = fastq_file):
+            #print(record)
+            records.append(record)
+    
+    assert len(records) == 0
+
+    # print("NEW TEST")
+    records = []
+    with open("tests/blank.fq", "r") as fastq_file:
+        fastq_parser = FastqParser("tests/blank.fq")
+        for record in fastq_parser._get_record(f_obj = fastq_file):
+            #print(record)
+            records.append(record)
+    
+    assert len(records) == 0
+
 
 def test_FastqFormat():
     """
